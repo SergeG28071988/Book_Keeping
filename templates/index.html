@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Book List
+{% endblock %}
+
+<br>
+{% block content %}
+<br><br><br>
+    <h1 class="text-center">Book List</h1>
+    <table class="table table-dark table-striped-columns table-hover">
+        <tr>
+            <th>Author</th>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Date Received</th>
+            <th>Price</th>
+            <th>Detail</th>
+        </tr>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.author }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.date_received.strftime('%d-%m-%Y') }}</td>
+            <td>{{ book.price }}</td>
+            <td><a href="/books/{{ book.id }}" class="btn btn-warning">Подробнее</a></td>
+        </tr>
+        {% endfor %}
+    </table><br><br>
+    <h2 class="text-center">Add Books</h2>
+    <form method="POST" class="form">
+        {{ form.csrf_token }}
+        {{ form.hidden_tag() }}
+    
+        <div class="form-group">
+            {{ form.author.label }}
+            {{ form.author(class="form-control", placeholder="Введите автора", required=True) }}
+        </div>
+    
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title(class="form-control", placeholder="Введите название книги", required=True) }}
+        </div>
+    
+        <div class="form-group">
+            {{ form.genre.label }}
+            {{ form.genre(class="form-control", placeholder="Введите жанр", required=True) }}
+        </div>
+    
+        <div class="form-group">
+            {{ form.date_received.label }}
+            {{ form.date_received(class="form-control", placeholder="Дата поступления", required=True) }}
+        </div>
+    
+        <div class="form-group">
+            {{ form.price.label }}
+            {{ form.price(class="form-control", placeholder="Введите цену") }}
+        </div><br>
+    
+        <input type="submit" class="btn btn-success" value="Добавить">
+    </form>    
+   
+{% endblock %}
